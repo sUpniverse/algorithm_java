@@ -1,0 +1,53 @@
+package frog_jump;
+
+import java.util.Scanner;
+
+public class Solution {
+	static int Answer;
+
+	public static void main(String args[]) throws Exception	{
+		
+		Scanner sc = new Scanner(System.in);
+
+		int T = sc.nextInt();
+		for(int test_case = 0; test_case < T; test_case++) {
+
+			Answer = 0;
+			
+			int stone_num  = sc.nextInt();
+			int[] stone = new int[1000001];
+			stone[0] = 1;
+			int end_stone = 0;
+
+			int num = 0;
+			for(int i = 0; i < stone_num; i++) {
+				num = sc.nextInt();
+				stone[num] = 1;
+				if(i == stone_num-1)
+					end_stone = num;
+			}				
+			
+			int jump = sc.nextInt();
+			int stone_point = 0;
+			while(stone_point != end_stone && Answer != -1) {
+				
+				for(int i = jump; i >= 0 ; i--) {					
+					if(i == 0) {
+						Answer = -1;
+						break;
+					}
+					else if(stone[stone_point+jump] == 1) {
+						Answer++;
+						stone_point += jump;
+						break;					
+					}
+				}
+			}
+			
+			System.out.println("Case #"+(test_case+1));
+			System.out.println(Answer);
+			
+		}
+	}
+
+}

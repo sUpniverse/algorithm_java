@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;codeground_number&apos; to &apos;codeground&apos;&#x0A;- Original element: &apos;codeground_number&apos;&#x0A;- Renamed element: &apos;codeground_number&apos;&#x0A;- Update references to refactored element" description="Rename Java project &apos;codeground_number&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=codeground_number" name="codeground" references="true" stamp="1522907751618" version="1.0"/>
+</session>

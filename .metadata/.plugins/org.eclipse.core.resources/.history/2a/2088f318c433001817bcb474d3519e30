@@ -1,0 +1,14 @@
+package everyday_programming;
+
+import java.util.Scanner;
+
+public class small_int {
+	public small_int() {
+		Scanner sc = new Scanner(System.in);
+		
+		int[] A = {1,2,3,4};
+		int size = A.length;
+		int[] Check = new int[size+1];
+		for()
+	}
+}

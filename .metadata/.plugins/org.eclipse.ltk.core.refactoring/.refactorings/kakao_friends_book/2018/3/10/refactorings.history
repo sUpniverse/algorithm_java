@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;kakao_friends_book.MainClass&apos; to &apos;Solution&apos;&#x0A;- Original project: &apos;kakao_friends_book&apos;&#x0A;- Original element: &apos;kakao_friends_book.MainClass&apos;&#x0A;- Renamed element: &apos;kakao_friends_book.Solution&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;MainClass&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;kakao_friends_book{MainClass.java[MainClass" matchStrategy="1" name="Solution" qualified="false" references="true" similarDeclarations="false" stamp="1520496236128" textual="false" version="1.0"/>
+</session>

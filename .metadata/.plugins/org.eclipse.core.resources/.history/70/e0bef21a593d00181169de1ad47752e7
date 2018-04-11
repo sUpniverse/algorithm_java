@@ -1,0 +1,79 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Solution {
+
+		
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int user_num = sc.nextInt();
+		int rel_num = sc.nextInt();
+		
+//		Map<Integer,ArrayList<Integer>> finder = new HashMap<>(); 
+//		
+//		for(int i = 0; i < rel_num; i++) {
+//			int num1 = sc.nextInt();
+//			int num2 = sc.nextInt();
+//			
+//			if(finder.containsKey(num1)) {
+//				finder.get(num1).add(num2);
+//			} else {
+//				ArrayList<Integer> val = new ArrayList<>();				
+//				val.add(num2);
+//				finder.put(num1, val);
+//				if(finder.containsKey(num2)) {
+//					finder.get(num2).add(num1);
+//				} else  {
+//					val = new ArrayList<>();				
+//					val.add(num1);
+//					finder.put(num1, val);
+//				}				
+//			}
+//			
+//		}
+		
+		int[][] relation = new int[user_num+1][user_num+1];
+		int answer = 0;
+		int sum = 0;
+		int value = Integer.MAX_VALUE;
+		
+		
+		for(int i = 1; i <= rel_num; i++) {
+			int num1 = sc.nextInt();
+			int num2 = sc.nextInt();
+			
+			relation[num1][num2] = 1;
+	 		relation[num2][num1] = 1;
+		}
+		
+		
+		for(int i = 1 ; i <= user_num ; i++) {  				// 가운데 노드, 여기를 거쳐간다.
+			for(int row = 1; row <= user_num; row++) { 		// 시작노드
+				for(int col = 1; col <= user_num; col++) {	// 종착노드
+					if(relation[row][i] != 0 && relation[i][col] != 0 ) {
+						if(relation[row][col] > relation[row][i] + relation[i][col]) {
+							relation[row][col] = relation[row][i] + relation[i][col];
+							System.out.print(relation[row][col]);
+						}
+					}					
+				}
+				System.out.println();
+			}
+		}
+		
+		for(int i = 1 ; i <= user_num; i++ ) {
+			for(int j = 1 ; j <= user_num; j++) {
+				sum += relation[i][j];
+				System.out.println(sum);
+			}
+			if(value > sum) {
+				value = sum;
+				answer = i;
+			}
+		}
+		System.out.println(answer);
+	}
+}

@@ -1,0 +1,57 @@
+package changeBinary;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class MainClass {
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		
+		String a =  in.readLine();
+		
+		char[] b = a.toCharArray();
+		
+		String h = "";
+		
+		System.out.println(b[0]);
+		
+		for(int i = 0; i < b.length-1 ; i++) {
+			if(b[i] == '0') {
+				if(i == 0)
+					h =  h + "" ;
+				else
+					h = h + "000";
+			} else if (b[i] == '1') {
+				if(i == 0)
+					h =  h + "1";
+				else
+					h = h + "001";
+			} else if( b[i] == '2') {
+				if(i == 0 )
+					h = h + "10"; 
+				else
+					h =  h + "010"; 
+			} else if(b[i] == '3') {
+				if(i == 0)
+					h = h + "11"; 
+				else 
+					h = h + "011";
+			} else if(b[i] == '4') {
+				h = h + "100"; 
+			} else if(b[i] == '5') {
+				h = h + "101";
+			} else if(b[i] == '6') {
+				h = h + "110";
+			} else {
+				h = h + "111";
+			}		
+				
+		}
+		
+		System.out.println(h);
+	
+	}
+
+}
