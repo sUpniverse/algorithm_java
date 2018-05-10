@@ -1,40 +1,13 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Solution {
-
 		
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		
 		int user_num = sc.nextInt();
 		int rel_num = sc.nextInt();
-		
-//		Map<Integer,ArrayList<Integer>> finder = new HashMap<>(); 
-//		
-//		for(int i = 0; i < rel_num; i++) {
-//			int num1 = sc.nextInt();
-//			int num2 = sc.nextInt();
-//			
-//			if(finder.containsKey(num1)) {
-//				finder.get(num1).add(num2);
-//			} else {
-//				ArrayList<Integer> val = new ArrayList<>();				
-//				val.add(num2);
-//				finder.put(num1, val);
-//				if(finder.containsKey(num2)) {
-//					finder.get(num2).add(num1);
-//				} else  {
-//					val = new ArrayList<>();				
-//					val.add(num1);
-//					finder.put(num1, val);
-//				}				
-//			}
-//			
-//		}
-		
+	
 		int[][] relation = new int[user_num+1][user_num+1];
 		int answer = 0;
 		int sum = 0;
@@ -57,8 +30,10 @@ public class Solution {
 						if(relation[row][col] > relation[row][i] + relation[i][col]) {
 							if(relation[row][col] == 0) {
 								relation[row][col] = relation[row][i] + relation[i][col];
+								relation[col][row] = relation[row][i] + relation[i][col];
 							} else {
 								relation[row][col] = Math.min(relation[row][col], relation[row][i] + relation[i][col]);
+								relation[col][row] = relation[row][i] + relation[i][col];
 							}														
 						}
 					}					
