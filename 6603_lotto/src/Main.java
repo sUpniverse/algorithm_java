@@ -40,7 +40,7 @@ public class Main {
             pair(now+1,search+1);              
         }
         pair(now,search+1);       
-    }
+    }    
     
     public static void printarr(int[] lotto) {
         for(int i = 0; i < lotto.length ; i++) {

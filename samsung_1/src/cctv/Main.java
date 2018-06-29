@@ -3,260 +3,210 @@ package cctv;
 import java.util.Scanner;
 
 public class Main {
-	static int[][] map;
-	
-	public static void main(String[] args) {
-		
-		Scanner sc = new Scanner(System.in);
-		
-		int num1 = sc.nextInt();
-		int num2 = sc.nextInt();
-		
-		map = new int[num1][num2];
-		
-		int end = 0;
-		for(int i = 0; i < num1; i++) {
-			for(int j = 0; j < num2; j++) {			
-				map[i][j] = sc.nextInt();;
-			}
-		}
-		
-		int[][] check = new int[num1][num2];
-		int answer = 0;
-		
-		for(int i = 0; i < num1; i++) {
-			for(int j = 0; j < num2; j++) {				
-				if(map[i][j] == 5) {
-					Move_left(i,j,1);
-					Move_right(i,j,1);
-					Move_top(i,j,1);
-					Move_bottom(i,j,1);
-				}					
-			}
-		}
-		
-		for(int i = 4; i > 0 ; i--)
-			solve(i);	
-//		
-//		
-//		for(int i = 0; i < num1; i++) {
-//		for(int j = 0; j < num2; j++) {			
-//			System.out.print(map[i][j]);
-//		}
-//		System.out.println();
-//	
-		for(int i = 0; i < num1; i++) {
-			for(int j = 0; j < num2; j++) {				
-				if(map[i][j] == 0) 
-					answer++;
-			}
-		}	
-		
-		
-		System.out.println(answer);
-		
-	}
-	
-	public static void solve(int z) {
-		 for(int i = 0; i < map.length; i++) {
-			 for(int j = 0; j < map[i].length; j++) {
-				 if(map[i][j] == 1 && map[i][j] == z) {
-					 
-					 int max = 0;
-					 int value = 0;
-					 int position = 0;
-					 
-					 value = Move_left(i,j,0);
-					 position = (max > value)? position : 1;
-					 max = (max > value)? max : value;
-					 value = Move_right(i,j,0);
-					 position = (max > value)? position : 2;
-					 max = (max > value)? max : value;
-					 value = Move_top(i,j,0);
-					 position = (max > value)? position : 3;
-					 max = (max > value)? max : value;
-					 value = Move_bottom(i,j,0);
-					 position = (max > value)? position : 4;
-					 max = (max > value)? max : value;
-					 
-					 switch (position) {
-					case 1:
-						Move_left(i,j,1);
-						break;
+    static int[][] map;
+    static int[][] copymap;
+    static int[][] cctv;
+    static int m;
+    static int n;
+    static int count;
+    static int sum;
 
-					case 2:
-						Move_right(i,j,1);
-						break;
-						
-					case 3:
-						Move_top(i,j,1);
-						break;
-						
-					case 4:
-						Move_bottom(i,j,1);
-						break;
-					}
-					 
-				 }else if(map[i][j] == 2 && map[i][j] == z) {
-					 int max = 0;
-					 int value = 0;
-					 int position = 0;
-					 
-					 value = Move_left(i,j,0) + Move_right(i,j,0);
-					 position = (max > value)? position : 1;
-					 max = (max > value)? max : value;
-					 value = Move_top(i,j,0) + Move_bottom(i,j,0);
-					 position = (max > value)? position : 2;
-					 max = (max > value)? max : value;			 
-					 
-					 switch (position) {
-						case 1:
-							Move_left(i,j,1);
-							Move_right(i,j,1);
-							break;
-
-						case 2:
-							Move_top(i,j,1);
-							Move_bottom(i,j,1);
-							break;							
-						}
-					 
-				 }else if(map[i][j] == 3 && map[i][j] == z) {
-					 int max = 0;
-					 int value = 0;
-					 int position = 0;
-					 
-					 value = Move_top(i,j,0) + Move_left(i,j,0);
-					 position = (max > value)? position : 1;
-					 max = (max > value)? max : value;
-					 value = Move_left(i,j,0) + Move_bottom(i,j,0);
-					 position = (max > value)? position : 2;
-					 max = (max > value)? max : value;
-					 value = Move_bottom(i,j,0) + Move_right(i,j,0);
-					 position = (max > value)? position : 3;
-					 max = (max > value)? max : value;
-					 value = Move_right(i,j,0) + Move_top(i,j,0);
-					 position = (max > value)? position : 4;
-					 max = (max > value)? max : value;
-					 
-					 switch (position) {
-						case 1:
-							Move_top(i,j,1);
-							Move_left(i,j,1);
-							break;
-
-						case 2:
-							Move_left(i,j,1);
-							Move_bottom(i,j,1);
-							break;
-							
-						case 3:
-							Move_bottom(i,j,1);
-							Move_right(i,j,1);
-							break;
-							
-						case 4:
-							Move_right(i,j,1);
-							Move_top(i,j,1);
-							break;
-						}
-					 
-				 }else if(map[i][j] == 4 && map[i][j] == z) {
-					 int max = 0;
-					 int value = 0;
-					 int position = 0;
-					 
-					 value = Move_top(i,j,0) + Move_left(i,j,0) + Move_right(i,j,0) ;
-					 position = (max > value)? position : 1;
-					 max = (max > value)? max : value;
-					 value = Move_top(i,j,0) + Move_left(i,j,0) + Move_bottom(i,j,0) ;
-					 position = (max > value)? position : 2;
-					 max = (max > value)? max : value;
-					 value =  Move_left(i,j,0) + Move_bottom(i,j,0) + Move_right(i,j,0);
-					 position = (max > value)? position : 3;
-					 max = (max > value)? max : value;
-					 value = Move_bottom(i,j,0)+ Move_right(i,j,0) + Move_top(i,j,0);
-					 position = (max > value)? position : 4;
-					 max = (max > value)? max : value;
-					 
-					 switch (position) {
-						case 1:
-							Move_top(i,j,1);
-							Move_left(i,j,1);
-							Move_right(i,j,1);
-							break;
-
-						case 2:
-							Move_top(i,j,1);
-							Move_left(i,j,1);
-							Move_bottom(i,j,1);
-							break;
-							
-						case 3:
-							Move_left(i,j,1);
-							Move_bottom(i,j,1);
-							Move_right(i,j,1);
-							break;
-							
-						case 4:
-							Move_bottom(i,j,1);
-							Move_right(i,j,1);
-							Move_top(i,j,1);
-							break;
-						}
-					 
-				 }
-			 }
-		 }
-			
-	}
-	
-	public static int Move_left(int i, int j, int k) {
-		int cnt = 0;
-		while(j >= 0 && j < map[i].length && map[i][j] != 6) {
-			if(map[i][j] == 0  && k == 0) 
-				cnt++;
-			else if(map[i][j] == 0 && k == 1)
-				map[i][j] = 9;
-			j--;
-		}
-		return cnt;
-	}
-	
-	public static int Move_right(int i, int j, int k) {
-		int cnt = 0;
-		while(j >= 0 && j < map[i].length && map[i][j] != 6) {
-			if(map[i][j] == 0  && k == 0)
-				cnt++;
-			else if(map[i][j] == 0 &&k == 1)
-				map[i][j] = 9;
-			j++;
-		}
-		return cnt;
-	}
-	
-	public static int Move_top(int i, int j, int k) {
-		int cnt = 0;
-		while(i >= 0 && i < map.length && map[i][j] != 6) {
-			if(map[i][j] == 0  && k == 0)
-				cnt++;
-			else if(map[i][j] == 0 && k == 1)
-				map[i][j] = 9;
-			i--;
-		}		
-		return cnt;
-	}
-	
-	public static int Move_bottom(int i, int j, int k) {
-		int cnt = 0;
-		while(i >= 0 && i > map.length && map[i][j] != 6) {
-			if(map[i][j] == 0  && k == 0)
-				cnt++;
-			else if(map[i][j] == 0 &&k == 1)
-				map[i][j] = 9;
-			i++;
-		}
-		return cnt;
-	}
-	
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        m =0;
+        n =0;
+        
+        m = sc.nextInt();
+        n = sc.nextInt();
+        map = new int[m][n];        
+        cctv = new int[8][2];
+        
+        int value = 0;
+        count = 0;
+        sum = Integer.MAX_VALUE;
+        
+        for(int i = 0; i <m ; i++) {
+            for(int j = 0; j <n ; j++) {                
+                value = sc.nextInt();
+                map[i][j] = value;
+                if(value > 0 && value < 6) {
+                    cctv[count][0] = i;
+                    cctv[count][1] = j;
+                    count++;
+                }
+            }
+        }        
+        watch(0);
+        System.out.println(sum);
+    }
+    
+    public static void watch(int pic) {
+        if(pic >= count) {
+           counting(pic);
+            return ;  
+        }           
+        int[][] copymap = new int[m][n];
+         for(int i = 0; i <m ; i++) {
+            for(int j = 0; j <n ; j++)            
+                copymap[i][j] = map[i][j];
+            }
+        int val = map[cctv[pic][0]][cctv[pic][1]];
+        if(val == 1) {
+            paint(cctv[pic][0],cctv[pic][1],1,9);
+            watch(pic+1); 
+            clear(copymap);
+            paint(cctv[pic][0],cctv[pic][1],2,9);
+            watch(pic+1);  
+            clear(copymap);
+            paint(cctv[pic][0],cctv[pic][1],3,9);
+            watch(pic+1);  
+            clear(copymap);
+            paint(cctv[pic][0],cctv[pic][1],4,9);
+            watch(pic+1);  
+            clear(copymap);
+        }
+        if(val == 2) {
+            paint(cctv[pic][0],cctv[pic][1],1,9);
+            paint(cctv[pic][0],cctv[pic][1],2,9);
+            watch(pic+1);          
+            clear(copymap);
+            paint(cctv[pic][0],cctv[pic][1],3,9);
+            paint(cctv[pic][0],cctv[pic][1],4,9);
+            watch(pic+1);  
+            clear(copymap);
+        }
+        if(val == 3) {
+            paint(cctv[pic][0],cctv[pic][1],1,9);
+            paint(cctv[pic][0],cctv[pic][1],3,9);
+            watch(pic+1);    
+            clear(copymap);
+            paint(cctv[pic][0],cctv[pic][1],1,9);
+            paint(cctv[pic][0],cctv[pic][1],4,9);
+            watch(pic+1);  
+            clear(copymap);
+            paint(cctv[pic][0],cctv[pic][1],2,9);
+            paint(cctv[pic][0],cctv[pic][1],3,9);
+            watch(pic+1);  
+            clear(copymap);
+            paint(cctv[pic][0],cctv[pic][1],2,9);
+            paint(cctv[pic][0],cctv[pic][1],4,9);
+            watch(pic+1);  
+            clear(copymap);
+        }
+        if(val == 4) {
+            paint(cctv[pic][0],cctv[pic][1],1,9);
+            paint(cctv[pic][0],cctv[pic][1],4,9);
+            paint(cctv[pic][0],cctv[pic][1],2,9);
+            watch(pic+1);       
+            clear(copymap);
+            paint(cctv[pic][0],cctv[pic][1],4,9);
+            paint(cctv[pic][0],cctv[pic][1],2,9);
+            paint(cctv[pic][0],cctv[pic][1],3,9);
+            watch(pic+1);  
+            clear(copymap);
+            paint(cctv[pic][0],cctv[pic][1],2,9);
+            paint(cctv[pic][0],cctv[pic][1],3,9);
+            paint(cctv[pic][0],cctv[pic][1],1,9);
+            watch(pic+1);  
+            clear(copymap);
+            paint(cctv[pic][0],cctv[pic][1],3,9);
+            paint(cctv[pic][0],cctv[pic][1],1,9);
+            paint(cctv[pic][0],cctv[pic][1],4,9);
+            watch(pic+1);  
+            clear(copymap);
+        }
+        if(val == 5) {
+            paint(cctv[pic][0],cctv[pic][1],1,9);
+            paint(cctv[pic][0],cctv[pic][1],2,9);
+            paint(cctv[pic][0],cctv[pic][1],3,9);
+            paint(cctv[pic][0],cctv[pic][1],4,9);
+            watch(pic+1);   
+           clear(copymap);
+        }        
+    }
+    
+    static void paint(int x, int y, int dir, int col) {
+        //왼쪽
+        if(dir == 1) {
+             while(true) {
+                if(x < 0 || x >= m || y < 0 || y >= n || map[x][y] == 6) 
+                    break;                 
+                if(map[x][y] > 0 && map[x][y] < 10) {
+                     x--;
+                     continue;
+                }                 
+                 map[x][y] = col;
+                 x--;                
+             }
+            return;
+        }
+            
+        //오른쪽
+        if(dir == 2) {
+            while(true) {
+                if(x < 0 || x >= m || y < 0 || y >= n || map[x][y] == 6) 
+                    break;                 
+                if(map[x][y] > 0 && map[x][y] < 10) {
+                    x++;
+                    continue;
+                }                     
+                map[x][y] = col;
+                x++;                
+             }
+            return;
+        }            
+        //위
+        if(dir == 3) {
+            while(true) {
+                if(x < 0 || x >= m || y < 0 || y >= n || map[x][y] == 6) 
+                    break;                 
+                if(map[x][y] > 0 && map[x][y] < 10) {
+                    y--;
+                    continue;
+                }
+                     
+                map[x][y] = col;
+                y--;                
+             }
+            return;
+        }
+            
+        //아래
+        if(dir == 4) {
+            while(true) {
+                if(x < 0 || x >= m || y < 0 || y >= n || map[x][y] == 6) 
+                    break;                 
+                if(map[x][y] > 0 && map[x][y] < 6) {
+                    y++;
+                    continue;
+                }                     
+                map[x][y] = col;
+                y++;                
+             }
+            return;
+        }                
+    }
+    
+    static void counting(int pic) {
+        int val = 0;
+            for(int i = 0; i < m; i++) {
+                for(int j = 0; j < n; j++) {
+                    if(map[i][j] == 0) {
+                        val++;
+                    }
+                }
+            }
+            sum = Math.min(sum,val);
+    }
+        
+    static void clear(int[][] copy)  {
+         for(int i = 0; i < m; i++) {
+                for(int j = 0; j < n; j++) {
+                    map[i][j] = copy[i][j];
+                }
+         }
+    }            
+    
 }
+
+        
