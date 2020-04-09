@@ -11,22 +11,22 @@ public class Main {
         int num1 = Integer.parseInt(s[0]);
         int num2 = Integer.parseInt(s[1]);
 
-        int l = 0;
+        int g = 0;
         for(int i = 1 ; i < Integer.max(num1, num2)+1; i++) {
             if ((num1 % i) == 0 && (num2 % i) == 0) {
-                l = Integer.max(l, i);
+                g = Integer.max(g, i);
             }
         }
 //        int i  = 1;
 //        while(i < Integer.MAX_VALUE) {
 //            if((i%num1) == 0 && (i%num2) == 0) {
-//                g = Integer.min(g, i);
+//                l = Integer.min(l, i);
 //                break;
 //            }
 //            i++;
 //        }
 
-        System.out.println(l);
+        System.out.println(g);
 //        System.out.println(num1*num2/l);
     }
 }
