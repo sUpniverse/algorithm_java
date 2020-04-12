@@ -1,80 +1,72 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
 
-    static int[][] line;
-    static int[] dfscache;
-    static int[] bfscache;
+    static ArrayList<Integer>[] edges;
     static int N;
+    static boolean[] visited;
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
     public static void main(String[] args) throws IOException {
 
-        InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-
-
 
         N = Integer.parseInt(stringTokenizer.nextToken());
         int M  = Integer.parseInt(stringTokenizer.nextToken());
         int V = Integer.parseInt(stringTokenizer.nextToken());
 
-        line = new int[N+1][N+1];
-        dfscache = new int[N+1];
-        bfscache = new int[N+1];
+        edges = new ArrayList[N+1];
+        visited = new boolean[N+1];
+
+        for(int i = 0; i <edges.length; i++) {
+            edges[i] = new ArrayList<Integer>();
+        }
 
         for(int i = 0; i < M; i++) {
             stringTokenizer = new StringTokenizer(bufferedReader.readLine());
             int a = Integer.parseInt(stringTokenizer.nextToken());
             int b = Integer.parseInt(stringTokenizer.nextToken());
-            line[a][b] = 1;
-            line[b][a] = 1;
+            edges[a].add(b);
+            edges[b].add(a);
+        }
+
+        for(int i = 0; i <edges.length; i++) {
+            Collections.sort(edges[i]);
         }
 
         dfs(V);
-        System.out.println();
+        bw.newLine();
+        visited = new boolean[N+1];
         bfs(V);
+        bw.close();
 
     }
 
-    public static void dfs(int v) {
-
-        dfscache[v] = 1;
-
-        System.out.print(v+" ");
-        for(int i = 1; i <= N; i++) {
-            if(line[v][i] == 1) {
-                if(dfscache[i] == 1) {
-                    continue;
-                }
+    public static void dfs(int v) throws IOException {
+        visited[v]  = true;
+        bw.write(v+" ");
+        for(Integer i : edges[v]) {
+            if(!visited[i]) {
                 dfs(i);
             }
         }
-
     }
 
-    public static void bfs(int v) {
+    public static void bfs(int v) throws IOException {
+        Queue<Integer> queue = new LinkedList<Integer>();
 
-        Queue queue = new LinkedList();
-
-        bfscache[v] = 1;
+        visited[v] = true;
         queue.add(v);
+        int poll;
         while(!queue.isEmpty()) {
-            int poll = (Integer) queue.poll();
-            System.out.printf(poll+" ");
-            for(int i = 1; i <= N; i++) {
-                if(line[poll][i] == 1) {
-                    if(bfscache[i] == 1) {
-                        continue;
-                    }
-                    bfscache[i] = 1;
-                    queue.add(i);
+            poll = queue.poll();
+            bw.write(poll+" ");
+            for(int i = 0; i < edges[poll].size(); i++) {
+                if(!visited[edges[poll].get(i)]) {
+                    queue.add(edges[poll].get(i));
+                    visited[edges[poll].get(i)] = true;
                 }
             }
         }
