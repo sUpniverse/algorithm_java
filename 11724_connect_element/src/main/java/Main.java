@@ -40,13 +40,10 @@ public class Main {
             if(dfscache[i] == 1) {
                 continue;
             }
-                cnt++;
-                dfs(i);
+            cnt++;
+            dfs(i);
         }
-
-        System.out.println();
         System.out.println(cnt);
-
     }
 
 
