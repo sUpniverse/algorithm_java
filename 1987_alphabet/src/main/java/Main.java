@@ -1,40 +1,36 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class Main {
 
     static int[] dx = {-1,0,1,0};
     static int[] dy = {0,-1,0,1};
     static int[][] map;
-    static boolean[] visited;
     static int value  = Integer.MIN_VALUE;
     static int r,c;
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-        String[] split = br.readLine().split(" ");
-        r = Integer.parseInt(split[0]);
-        c = Integer.parseInt(split[1]);
+        r = sc.nextInt();
+        c = sc.nextInt();
 
         map = new int[r][c];
-        visited = new boolean[26];
+        boolean[] visited = new boolean[26];
 
         for(int i = 0; i < r; i++) {
-            String[] ch = br.readLine().split("");
+            String ch = sc.next();
             for(int j = 0; j < c; j++) {
-                map[i][j] = ch[j].charAt(0)-'A';
+                map[i][j] = ch.charAt(j)-'A';
             }
         }
 
-        search(0, 0, 1);
+        search(0, 0, 1,visited);
 
         System.out.println(value);
 
     }
 
-    static void search(int x, int y,int count) {
+    static void search(int x, int y,int count,boolean[] visited) {
         visited[map[x][y]] = true;
         value = Math.max(value,count);
 
@@ -43,7 +39,7 @@ public class Main {
             int ay = y + dy[i];
 
             if(ax >= 0 && ax < r && ay >= 0 && ay < c && !visited[map[ax][ay]]) {
-                search(ax, ay, count+1);
+                search(ax, ay, count+1,visited);
             }
         }
         visited[map[x][y]] = false;
