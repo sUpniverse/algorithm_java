@@ -42,17 +42,17 @@ public class Main {
         Queue<Node> queue = new PriorityQueue<Node>();
 
         dist[s] = 0;
-        queue.add(new Node(s, 0));
+        queue.add(new Node(s, 0));    // S의 원소 시작점을 맨처음에 넣어준다.
 
         while (!queue.isEmpty()) {
-            Node tmp = queue.poll();
+            Node tmp = queue.poll();        // S의 원소를 추출
 
-            if(dist[tmp.idx] < tmp.cost) continue;
+            if(dist[tmp.idx] < tmp.cost) continue;  // 새로 탐색된 노드의 거리가 이미 탐색된 거리보다 크다면 바로 pass
 
-            for(Node node : graph[tmp.idx]) {
+            for(Node node : graph[tmp.idx]) {       // 새로 탐색된 노드의 인접한 노드의 거리를 이용하여 갱신(크면 갱신 작으면 놔둠)
                 if(dist[node.idx] > dist[tmp.idx] + node.cost) {
                     dist[node.idx] = dist[tmp.idx] + node.cost;
-                    queue.add(new Node(node.idx,dist[node.idx]));
+                    queue.add(new Node(node.idx,dist[node.idx]));   // 갱신된 노드들은 방문하지 않은 노드에 해당하므로 큐에 넣어서 또 탐색에 나섬
                 }
             }
 
