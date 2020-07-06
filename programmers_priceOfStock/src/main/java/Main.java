@@ -1,7 +1,3 @@
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -17,30 +13,15 @@ public class Main {
 
     static public int[] solution(int[] prices) {
         int[] answer = new int[prices.length];
-        boolean[] check = new boolean[prices.length];
 
-
-        Queue<Integer> queue = new LinkedList<>();
-
-        queue.add(0);
-        int now = 0;
-
-        while (now < prices.length-1) {
-            now++;
-
-            Iterator<Integer> iterator = queue.iterator();
-            while (iterator.hasNext()) {
-                Integer index = iterator.next();
-                if(!check[index] && prices[index] <= prices[now]) {
-                    answer[index]++;
-                } else {
-                    check[index] = false;
-
-                }
+        for(int i = 0; i < prices.length-1; i++) {
+            for(int j = i+1; j < prices.length; j++) {
+                answer[i]++;
+                if(prices[i] > prices[j])
+                    break;
             }
-
-            queue.add(now);
         }
+
 
         return answer;
     }
