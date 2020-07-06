@@ -10,11 +10,13 @@ public class Solution_2 {
 
         int[] solution = solution(sol_1[0], sol_1[1]);
         for(int i = 0; i < solution.length; i++)
-            System.out.println(solution[i]);
+            System.out.print(solution[i]+ " ");
+
+        System.out.println();
 
         int[] solution2 = solution(sol_2[0], sol_2[1]);
         for(int i = 0; i < solution2.length; i++)
-            System.out.println(solution2[i]);
+            System.out.print(solution2[i]+ " ");
 
 
     }
