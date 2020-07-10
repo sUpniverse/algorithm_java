@@ -5,8 +5,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String a = "ABABABABC";
-        String b = "ABAB";
+        String a = "banana banana";
+        String b = "ana";
 
         Queue<Integer> kmp = KMP(a.toCharArray(), b.toCharArray());
         for(int num : kmp) {
