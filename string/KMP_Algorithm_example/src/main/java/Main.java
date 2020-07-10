@@ -15,7 +15,7 @@ public class Main {
     }
 
     static Queue<Integer> KMP(char[] A, char[] B) {
-        int[] partial = getPartial(A);
+        int[] partial = getPartial(B);
 
         int j = 0;
 
