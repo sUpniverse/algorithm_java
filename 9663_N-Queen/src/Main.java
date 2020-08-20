@@ -28,7 +28,8 @@ public class Main {
             }
         }
     }
-    
+    // 1. 직접 가로세로 대각선을 센것이 아니 해당 세로의 배열에 가로의 몇번째에 해당 값이 있는지 넣어놈
+    // 2. 대각선의 위치에 있는지 확인하기 위해
     public static boolean isPossilbe(int level) {
         for(int i = 0; i < level; i++) {            
          if(map[level] == map[i] || Math.abs(level - i) == Math.abs(map[level] - map[i]))
