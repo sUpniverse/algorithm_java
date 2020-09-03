@@ -48,7 +48,7 @@ public class NewsClustering {
 
         }
 
-        if(union == 0) return 1;
+        if(union == 0) return 1* 65536;
 
         double a = intersection/union;
         System.out.println(a);
