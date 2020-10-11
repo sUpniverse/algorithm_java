@@ -7,7 +7,7 @@ public class StringCompression {
         int answer = Integer.MAX_VALUE;
         if(s.length() == 0) return 0;
         String[] split = s.split("");
-        for(int i = 1; i <= 8; i++) {
+        for(int i = 1; i <= s.length()/2+1; i++) {
             if(s.length() < i)  return answer;
             StringBuilder sb = new StringBuilder();
             for(int j = 0; j < split.length; ) {
