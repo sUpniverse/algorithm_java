@@ -1,68 +1,61 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
-public class Main {    
-    static int[] arr ;
-    static int[] queue ;
-    static int n;
-    
-    public static void main(String args[]) {
-        Scanner sc = new Scanner(System.in);
-        
-        int test_case = 0;        
-        n = 0;
-        int m = 0;
-        int value = 0;
-        
-        test_case = sc.nextInt();
-        while(test_case != 0) {
-            n = sc.nextInt();
-            m = sc.nextInt();
-            
-            arr = new int[n];
-            queue = new int[n];    
-            for(int i = 0; i < n; i++)
-                arr[i] = sc.nextInt();          
-           
-            print(0,0);
-            
-            System.out.println(queue[m]);    
-            
-             for(int i = 0; i < n; i++)
-                 System.out.print(queue[i]);
-            
-            test_case--;
-        }         
-        
-    }       
-    public static void print(int now, int index) {      
-        if(index >= n)
-            index = index % n ;
-        
-        if(now >= n)
-            return ;
-        
-        int a = arr[index];
-        int b = 0;
-        int tmp = index;
-        for(int i = index; i < n; i++ ) {
-            if(a < arr[i]) {                
-                index = i;
-                a = arr[i];                
-            }       
-            if(b >= 1 && i%(n-1) >= tmp)
-                break;
-            
-            if(i == n-1){
-                i = 0;
-                b++;
-            }          
-            
-        } 
-        queue[index] = now+1;
-        arr[index] = -1;
-        
-        print(now+1,index+1);
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int T = Integer.parseInt(br.readLine());
+        while (T-- > 0) {
+            int count = 0;
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int N = Integer.parseInt(st.nextToken());
+            int M = Integer.parseInt(st.nextToken());
+
+            Queue<Document> queue = new LinkedList<>();
+            st = new StringTokenizer(br.readLine());
+            for(int i = 0; i < N; i++) {
+                queue.add(new Document(i,Integer.parseInt(st.nextToken())));
+            }
+
+            while (!queue.isEmpty()) {
+                boolean flag = false;
+                Document doc = queue.remove();
+                Iterator<Document> iterator = queue.iterator();
+                while (iterator.hasNext()) {
+                    Document document = iterator.next();
+                    if(document.priority > doc.priority) {
+                        flag  = true;
+                        break;
+                    }
+                }
+                if(flag) {
+                    queue.add(doc);
+                    continue;
+                }
+                count++;
+                if(doc.index == M) {
+                    break;
+                }
+            }
+            System.out.println(count);
+        }
     }
-    
+
+    static class Document {
+        int index;
+        int priority;
+
+        public Document(int index, int priority) {
+            this.index = index;
+            this.priority = priority;
+        }
+    }
   
 }
