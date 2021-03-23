@@ -1,23 +1,20 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class Main {
 
   static int count = 0;
   static int[][] map;
+  static int[][] cmap;
   static int[][] dir = {{0,-1},{1,0},{0,1},{-1,0}};
 
-  public static void main(String[] args) throws IOException {
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+  public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
 
     int n = sc.nextInt();
     int m = sc.nextInt();
 
     map = new int[n][m];
+    cmap = new int[n][m];
 
     sc.nextLine();
 
@@ -34,20 +31,37 @@ public class Main {
     }
 
 
+    findWay(r,c,d);
+
+    System.out.println(count);
+
+
   }
 
   static void findWay(int x, int y, int d) {
-    if(map[x][y] == 1 || map[x][y] == 2) {
-      if(map[x-dir[d][0]][y-dir[d][1]] == 1 || map[x-dir[d][0]][y-dir[d][1]] == 2) {
-        x
+
+    if(map[x][y] == 0) {
+      map[x][y] = 2;
+      count++;
+      cmap[x][y] = count;
+    }
+
+    int dr = d;
+    for(int i = 0; i < 4; i++) {
+      dr = (dr + 3) % 4;
+      int dx = x + dir[dr][0];
+      int dy = y + dir[dr][1];
+      if(map[dx][dy] == 0) {
+        findWay(dx,dy, dr);
+        return;
       }
     }
 
-    map[x][y] = 2;
-
-    for(int i = 0; i < 4; i++) {
-      findWay(x+dir[i][0],y+dir[i][1],i);
+    int bx = x - dir[d][0];
+    int by = y - dir[d][1];
+    if(map[bx][by] != 1) {
+      findWay(bx, by, d);
     }
+    return;
   }
-
 }
