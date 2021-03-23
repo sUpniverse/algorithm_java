@@ -5,7 +5,7 @@ public class Main {
   static int count = 0;
   static int[][] map;
   static int[][] cmap;
-  static int[][] dir = {{0,-1},{1,0},{0,1},{-1,0}};
+  static int[][] dir = {{-1,0},{0,1},{1,0},{0,-1}};
 
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
@@ -32,10 +32,7 @@ public class Main {
 
 
     findWay(r,c,d);
-
     System.out.println(count);
-
-
   }
 
   static void findWay(int x, int y, int d) {
