@@ -15,17 +15,16 @@ public class Main {
       spot[i] = sc.nextInt();
     }
 
-    Arrays.sort(spot);
-
     int count = 0;
-    int now = spot[0];
+
+    Arrays.sort(spot);
+    int range = (int) (spot[0] - 0.5+length);
     count++;
-    for(int i = 0; i < spotSize; i++) {
-      if(spot[i] - now > length - 1) {
+
+    for(int i = 1; i < spotSize; i++) {
+      if(range < (int)(spot[i]+0.5)) {
+        range = (int)(spot[0] - 0.5+length);
         count++;
-        now = spot[i];
-      } else {
-        now = spot[i+1];
       }
     }
 
