@@ -20,16 +20,16 @@ public class Main {
       int[] sum = new int[n+1];
 
       for(int i = 1; i <= n; i++) {
-        arr[i] = Integer.parseInt(split[0]);
+        arr[i] = Integer.parseInt(split[i-1]);
         sum[i] = arr[i] + sum[i-1];
       }
 
       int[][] dp = new int[n+1][n+1];
 
-      for(int gap = 1; gap < n; gap++) {
-        for(int start = 1; start+gap < n; start++) {
+      for(int gap = 1; gap <= n; gap++) {
+        for(int start = 1; start+gap <= n; start++) {
           int end = start+gap;
-          dp[start][gap] = Integer.MAX_VALUE;
+          dp[start][end] = Integer.MAX_VALUE;
           for(int mid = start; mid < end; mid++) {
             dp[start][end] = Math.min(dp[start][end], dp[start][mid] + dp[mid+1][end]);
           }
