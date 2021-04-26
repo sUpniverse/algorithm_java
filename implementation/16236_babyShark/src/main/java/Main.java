@@ -1,10 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class Main {
 
@@ -38,47 +35,57 @@ public class Main {
 
     int time = 0;
     Queue<Pair> queue = new LinkedList<>();
+    Queue<Pair> priority = new PriorityQueue<>();
 
     queue.add(pair);
 
-    while (!queue.isEmpty()) {
-      Pair remove = queue.remove();
-      int count = remove.count;
-      int size = remove.size;
-      for(int i = 0; i < 4; i++) {
-        int dx = remove.x + ax[i];
-        int dy = remove.y + ay[i];
-        if(dx < 0 || dx >= n || dy < 0 || dy >= n)
-          continue;
-        if(map[dx][dy] > remove.size || visited[dx][dy] == 1)
-          continue;
+    while (true) {
+      while (!queue.isEmpty()) {
+        Pair remove = queue.remove();
+        int count = remove.count;
+        int size = remove.size;
+        for(int i = 0; i < 4; i++) {
+          int dx = remove.x + ax[i];
+          int dy = remove.y + ay[i];
+          if(dx < 0 || dx >= n || dy < 0 || dy >= n)
+            continue;
+          if(map[dx][dy] > remove.size || visited[dx][dy] == 1)
+            continue;
 
-        if(map[dx][dy] != 0 && map[dx][dy] < size) {
-          count++;
-          if(count == size) {
-            size++;
-            count = 0;
+          if(map[dx][dy] != 0 && map[dx][dy] < size) {
+
+            //처음으로 먼저 먹은 물고기의 거리를 저장해 놓고
+            // 똑같은 거리의 물고기들까지만 순회한 뒤에 가장 우선순위가 높은 물고기를 먹는다.
+            Pair fish = new Pair(dx, dy, size, count, remove.distance+1);
+            if(!priority.contains(fish))
+              priority.add(fish);
           }
-          map[dx][dy] = 0;
-          Arrays.fill(visited, 0);
-          queue.clear();
-          time = remove.distance+1;
+
           visited[dx][dy] = 1;
           queue.add(new Pair(dx, dy, size, count, remove.distance+1));
-          break;
         }
-
-        visited[dx][dy] = 1;
-        queue.add(new Pair(dx, dy, size, count, remove.distance+1));
+       }
+      if(!priority.isEmpty()) {
+        Pair first = priority.remove();
+        first.count++;
+        if(first.count == first.size) {
+          first.size++;
+          first.count = 0;
+        }
+        visited = new int[n][n];
+        map[first.x][first.y] = 0;
+        time+= first.distance;
+        first.distance = 0;
+        queue.add(first);
+        priority.clear();
+      } else {
+        System.out.println(time);
+        return;
+      }
       }
     }
 
-    System.out.println(time);
-
-  }
-
-
-  static class Pair {
+  static class Pair implements Comparable<Pair>{
     int x;
     int y;
     int size;
@@ -92,6 +99,16 @@ public class Main {
       this.count = count;
       this.distance = distance;
     }
-  }
 
+    @Override
+    public int compareTo(Pair o) {
+      if(this.x == o.x) {
+        return this.y - o.y;
+      }
+      return this.x - this.x;
+    }
+  }
 }
+
+
+
